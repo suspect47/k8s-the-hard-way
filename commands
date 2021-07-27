@@ -76,7 +76,7 @@ gcloud compute addresses create kubernetes-the-hard-way \
 # проверяем какой назначен айпи
 gcloud compute addresses list --filter="name=('kubernetes-the-hard-way')"
 
-# создаем три инстанса на 20.04 убунте клауд, которые будут содержать контрольный план кубернетис
+# создаем три инстанса с фиксированными частными ip на 20.04 убунте клауд, которые будут содержать контрольный план кубернетис
 for i in 0 1 2; do
   gcloud compute instances create controller-${i} \
     --async \
@@ -91,3 +91,20 @@ for i in 0 1 2; do
     --tags kubernetes-the-hard-way,controller
 done
 
+# создаем три воркера на которых будут размещаться рабочие узлы
+for i in 0 1 2; do
+  gcloud compute instances create worker-${i} \
+    --async \
+    --boot-disk-size 200GB \
+    --can-ip-forward \
+    --image-family ubuntu-2004-lts \
+    --image-project ubuntu-os-cloud \
+    --machine-type e2-standard-2 \
+    --metadata pod-cidr=10.200.${i}.0/24 \
+    --private-network-ip 10.240.0.2${i} \
+    --scopes compute-rw,storage-ro,service-management,service-control,logging-write,monitoring \
+    --subnet kubernetes \
+    --tags kubernetes-the-hard-way,worker
+done
+
+# на этом шаге оказалось, что халявная учетка гугл клауд не подразумевает создание более 4х инстансов в одной зоне.
