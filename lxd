@@ -1,0 +1,36 @@
+sudo apt install lxd
+
+lxd init
+
+lxd storage list
+
+lxc list
+
+lxc launch images:centos/7 haproxy
+
+lxc list
++---------+---------+----------------------+------+-----------+-----------+
+|  NAME   |  STATE  |         IPV4         | IPV6 |   TYPE    | SNAPSHOTS |
++---------+---------+----------------------+------+-----------+-----------+
+| haproxy | RUNNING | 10.87.217.189 (eth0) |      | CONTAINER | 0         |
++---------+---------+----------------------+------+-----------+-----------+
+
+lxc profile list # понадобится
+
+# создаем инстансы контроллеров
+
+lxc launch ubuntu:20.04 controller-0 --profile default # мастер ноды
+
+lxc launch ubuntu:20.04 controller-1 --profile default
+
+lxc launch ubuntu:20.04 controller-2 --profile default
+
+lxc launch ubuntu:20.04 worker-0 --profile default # воркеры
+
+lxc launch ubuntu:20.04 worker-1 --profile default
+
+lxc launch ubuntu:20.04 worker-2 --profile default
+
+# настраиваем контейнер хапрокси
+lxc exec haproxy bash
+
