@@ -1,4 +1,6 @@
-echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+########################## Prerequisites ###########################
+
+gcloud projects listecho "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 
 sudo apt-get install apt-transport-https ca-certificates gnupg
 
@@ -12,5 +14,33 @@ gcloud init
 
 gcloud auth login
 
-gcloud config set project igi47
+gcloud config set project iginew47 
+
+gcloud projects list  # просмотреть список проектов
+
+gcloud config set project natural-aria-321108
+
+gcloud config set compute/region us-west1
+
+gcloud config set compute/zone us-west1-c
+
+###################### Installing the client tools #####################
+
+wget -q --show-progress --https-only --timestamping \
+  https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/1.4.1/linux/cfssl \
+  https://storage.googleapis.com/kubernetes-the-hard-way/cfssl/1.4.1/linux/cfssljson
+  
+chmod +x cfssl cfssljson
+
+sudo mv cfssl cfssljson /usr/local/bin/
+
+cfssl version
+
+cfssljson --version
+
+wget https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl
+
+chmod +x kubectl
+
+sudo mv kubectl /usr/local/bin/
 
