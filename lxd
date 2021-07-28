@@ -908,15 +908,30 @@ EOF
 # выходим из всех воркеров и верифицируем:
 
 
+# на хосте грохаем ~/.kube если есть
+# и создаем снова
 
+mkdir ~/.kube
 
+# дергаем конфиг с controller-0 например
 
+lxc file pull controller-0/root/admin.kubeconfig ~/.kube/config
 
+# проверяем с хоста:
 
+kubectl version --short
 
+# output:
 
+Client Version: v1.21.0
+Server Version: v1.21.0
 
+kubectl cluster-info
 
+# output:
+
+Kubernetes control plane is running at https://10.87.217.189:6443
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
 
 
