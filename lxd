@@ -42,7 +42,7 @@ nano /etc/haproxy/haproxy.cfg
 frontend lol
   bind 10.87.217.189:6443
   mode tcp
-#  default_backend default
+default_backend lol
 
 backend lol
   balance roundrobin
